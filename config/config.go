@@ -13,6 +13,11 @@ func (m *MySQLConfig) Dsn() string {
 	return m.Username + ":" + m.Password + "@(" + m.Host + ":" + m.Port + ")/" + m.DBName + "?" + m.Config
 }
 
+type SystemConfig struct {
+	Port string `mapstructure:"port"`
+}
+
 type ServerConfig struct {
-	MySqlConfig MySQLConfig `mapstructure:"mysql"`
+	MySqlConfig  MySQLConfig  `mapstructure:"mysql"`
+	SystemConfig SystemConfig `mapstructure:"system"`
 }
