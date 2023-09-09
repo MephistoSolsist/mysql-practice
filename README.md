@@ -1,7 +1,7 @@
 # Practice for mysql in golang
 
 ## 配置
-### config.yaml 格式如下
+### 在项目根目录新建 config.yaml 格式如下
 ```yaml
 system:
   port: "8000"
@@ -14,7 +14,6 @@ mysql:
   password: "xxxxxx"
   config: "charset=utf8mb4&parseTime=True&loc=Local"
 ```
-
 
 ## 课程选题
 ### 在线音乐分享系统

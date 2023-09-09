@@ -1,8 +1,7 @@
 package router
 
 import (
-	"net/http"
-
+	"github.com/MephistoSolsist/mysql-practice/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,6 +12,7 @@ type Login struct {
 
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
+	r.Use(middleware.Cors())
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
@@ -24,18 +24,14 @@ func SetupRouter() *gin.Engine {
 		UserGroup.POST("register", UserRouterApp.Register)
 	}
 
-	return r
-}
+	MusicGroup := r.Group("/music")
+	{
+		MusicGroup.GET("/", MusicRouterApp.GetMusicList)
+		MusicGroup.POST("/", MusicRouterApp.Upload)
+		MusicGroup.DELETE("/", MusicRouterApp.Delete)
+		MusicGroup.PUT("/", MusicRouterApp.Update)
+		MusicGroup.GET("/:id",MusicRouterApp.GetMusicById)
+	}
 
-func LoginJSON(c *gin.Context) {
-	var json Login
-	if err := c.ShouldBindJSON(&json); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
-	}
-	if json.Username != "root" || json.Password != "admin" {
-		c.JSON(http.StatusBadRequest, gin.H{"status": "304"})
-		return
-	}
-	c.JSON(http.StatusOK, gin.H{"status": "200"})
+	return r
 }
