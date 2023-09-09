@@ -1,7 +1,7 @@
 package model
 
 type Music struct {
-	MusicId    int    `json:"musicId"`
+	MusicId    int    `gorm:"PRIMARY_KEY" json:"musicId"`
 	MusicName  string `json:"musicName"`
 	ArtistId   int    `json:"artistId"`
 	ArtistName string `json:"artistName"`
@@ -10,10 +10,10 @@ type Music struct {
 }
 
 type MusicDB struct {
-	MusicId   int `gorm:"PRIMARY_KEY"`
-	MusicName string
-	ArtistId  int
-	AlbumId   int
+	MusicId   int    `gorm:"PRIMARY_KEY" json:"musicId"`
+	MusicName string `json:"musicName"`
+	ArtistId  int    `json:"artistId"`
+	AlbumId   int    `json:"albumId"`
 }
 
 func (*Music) TableName() string {

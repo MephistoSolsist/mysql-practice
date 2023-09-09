@@ -1,18 +1,13 @@
 package router
 
 import (
-	"github.com/MephistoSolsist/mysql-practice/middleware"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-type Login struct {
-	Username string `form:"username" json:"username" uri:"username" binding:"required"`
-	Password string `form:"password" json:"password" uri:"password" binding:"required"`
-}
-
 func SetupRouter() *gin.Engine {
 	r := gin.Default()
-	r.Use(middleware.Cors())
+	r.Use(cors.Default())
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.String(200, "pong")
@@ -28,9 +23,9 @@ func SetupRouter() *gin.Engine {
 	{
 		MusicGroup.GET("/", MusicRouterApp.GetMusicList)
 		MusicGroup.POST("/", MusicRouterApp.Upload)
-		MusicGroup.DELETE("/", MusicRouterApp.Delete)
+		MusicGroup.DELETE("/:id", MusicRouterApp.Delete)
 		MusicGroup.PUT("/", MusicRouterApp.Update)
-		MusicGroup.GET("/:id",MusicRouterApp.GetMusicById)
+		MusicGroup.GET("/:id", MusicRouterApp.GetMusicById)
 	}
 
 	return r

@@ -31,7 +31,7 @@ func (MusicRouter) GetMusicById(c *gin.Context) {
 }
 
 func (MusicRouter) Update(c *gin.Context) {
-	var m model.MusicDB
+	var m model.Music
 	c.BindJSON(&m)
 	err := service.MusicServiceApp.UpdateMusic(&m)
 	if err != nil {
@@ -42,9 +42,8 @@ func (MusicRouter) Update(c *gin.Context) {
 }
 
 func (MusicRouter) Delete(c *gin.Context) {
-	var m model.MusicDB
-	c.BindJSON(&m)
-	err := service.MusicServiceApp.DeleteMusic(&m)
+	id, _ := strconv.Atoi(c.Param("id"))
+	err := service.MusicServiceApp.DeleteMusic(id)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
@@ -53,7 +52,7 @@ func (MusicRouter) Delete(c *gin.Context) {
 }
 
 func (MusicRouter) Upload(c *gin.Context) {
-	var m model.MusicDB
+	var m model.Music
 	err := c.BindJSON(&m)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
